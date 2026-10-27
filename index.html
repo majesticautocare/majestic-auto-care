@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Majestic Auto Care</title>
+    <style>
+      :root {
+        --bg: #121417;
+        --panel: #1a1d20;
+        --panel-2: #15191d;
+        --gold: #d8b067;
+        --gold-soft: #f0d08a;
+        --text: #f2f2f2;
+        --muted: #d7d7d7;
+        --line: rgba(216, 176, 103, 0.75);
+        --input: #101418;
+        --button: #d8b067;
+        --button-text: #101010;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html, body {
+        margin: 0;
+        min-height: 100%;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 26px;
+      }
+
+      .page {
+        width: min(1280px, 100%);
+        background: rgba(26, 29, 32, 0.94);
+        border: 1px solid rgba(255,255,255,0.04);
+        border-radius: 30px;
+        padding: 42px 44px 32px;
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        margin-bottom: 26px;
+      }
+
+      .brand-mark {
+        width: 56px;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--gold);
+        font-size: 3rem;
+        line-height: 1;
+      }
+
+      .brand h1 {
+        margin: 0;
+        font-size: clamp(2.8rem, 4vw, 5.3rem);
+        font-weight: 500;
+        letter-spacing: -0.07em;
+        color: #f4f4f4;
+        line-height: 1;
+      }
+
+      .pricing {
+        margin-top: 8px;
+      }
+
+      .pricing-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 22px;
+        padding: 16px 0 18px;
+      }
+
+      .service {
+        font-size: clamp(2.1rem, 3vw, 4rem);
+        font-weight: 400;
+        letter-spacing: -0.065em;
+        color: #efefef;
+      }
+
+      .price {
+        font-size: clamp(2.3rem, 3vw, 4.2rem);
+        font-weight: 400;
+        letter-spacing: -0.065em;
+        color: var(--gold-soft);
+      }
+
+      .divider {
+        height: 2px;
+        background: rgba(216, 176, 103, 0.7);
+        margin: 16px 0 26px;
+      }
+
+      .note {
+        font-size: clamp(2rem, 2.2vw, 3.5rem);
+        line-height: 1.12;
+        font-weight: 400;
+        letter-spacing: -0.06em;
+        color: #f0f0f0;
+        margin-top: 12px;
+      }
+
+      .content {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 28px;
+        margin-top: 36px;
+      }
+
+      .panel {
+        background: rgba(22, 25, 28, 0.95);
+        border: 1px solid rgba(255,255,255,0.05);
+        border-radius: 24px;
+        padding: 26px 24px;
+      }
+
+      .panel h2 {
+        margin: 0 0 22px;
+        font-size: clamp(1.8rem, 2vw, 2.6rem);
+        letter-spacing: -0.04em;
+        color: #f3f3f3;
+      }
+
+      form {
+        display: grid;
+        gap: 18px;
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        font-size: 0.98rem;
+        color: var(--text);
+      }
+
+      input, select, textarea {
+        width: 100%;
+        background: var(--input);
+        border: 1px solid rgba(255,255,255,0.08);
+        color: var(--text);
+        border-radius: 12px;
+        padding: 14px 14px;
+        font-size: 1rem;
+        outline: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      input:focus, select:focus, textarea:focus {
+        border-color: var(--gold);
+        box-shadow: 0 0 0 4px rgba(216, 176, 103, 0.12);
+      }
+
+      textarea {
+        min-height: 110px;
+        resize: vertical;
+      }
+
+      .time-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .time-slot {
+        text-align: center;
+        padding: 12px 10px;
+        border-radius: 10px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.02);
+        color: var(--text);
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.2s ease;
+      }
+
+      .time-slot:hover {
+        border-color: var(--gold);
+        background: rgba(216, 176, 103, 0.08);
+      }
+
+      .time-slot.selected {
+        background: var(--gold);
+        color: #111;
+        border-color: var(--gold);
+      }
+
+      .submit-btn {
+        width: 100%;
+        border: none;
+        border-radius: 12px;
+        background: var(--button);
+        color: var(--button-text);
+        font-weight: 800;
+        font-size: 1rem;
+        padding: 16px 20px;
+        cursor: pointer;
+        transition: transform 0.2s ease, filter 0.2s ease;
+      }
+
+      .submit-btn:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.05);
+      }
+
+      .success {
+        display: none;
+        margin-top: 16px;
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.45);
+        color: #d1fae5;
+        border-radius: 12px;
+        padding: 14px 16px;
+        font-weight: 700;
+      }
+
+      .success.show {
+        display: block;
+      }
+
+      .info-box {
+        margin-bottom: 18px;
+        padding: 16px 18px;
+        border-radius: 16px;
+        background: rgba(255,255,255,0.02);
+        border: 1px solid rgba(255,255,255,0.05);
+      }
+
+      .info-box strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--gold-soft);
+      }
+
+      .info-box span {
+        color: var(--muted);
+        font-size: 1.06rem;
+        line-height: 1.6;
+      }
+
+      .cash {
+        color: var(--gold-soft);
+        font-weight: 700;
+      }
+
+      @media (max-width: 980px) {
+        .content {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 700px) {
+        body {
+          padding: 16px;
+        }
+
+        .page {
+          padding: 24px 18px 20px;
+          border-radius: 22px;
+        }
+
+        .brand {
+          gap: 12px;
+        }
+
+        .brand-mark {
+          width: 42px;
+          height: 42px;
+          font-size: 2.2rem;
+        }
+
+        .two-col,
+        .time-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .service,
+        .price {
+          font-size: 2.1rem;
+        }
+
+        .note {
+          font-size: 1.7rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="brand">
+        <div class="brand-mark" aria-label="Majestic Auto Care crown">♛</div>
+        <h1>Majestic Auto Care</h1>
+      </div>
+
+      <div class="pricing">
+        <div class="pricing-row">
+          <div class="service">Interior Detail</div>
+          <div class="price">$75</div>
+        </div>
+
+        <div class="pricing-row">
+          <div class="service">Exterior Wash</div>
+          <div class="price">$35</div>
+        </div>
+
+        <div class="pricing-row">
+          <div class="service">Full Detail</div>
+          <div class="price">$120</div>
+        </div>
+
+        <div class="pricing-row">
+          <div class="service">Premium Detail</div>
+          <div class="price">$175</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="note">
+        Prices remain unchanged unless you choose to update them later.
+      </div>
+
+      <div class="content">
+        <div class="panel">
+          <h2>Book an Appointment</h2>
+
+          <form id="bookingForm">
+            <div class="two-col">
+              <div>
+                <label for="name">Full Name</label>
+                <input id="name" type="text" placeholder="John Smith" required />
+              </div>
+
+              <div>
+                <label for="contact">Phone Number or Email</label>
+                <input id="contact" type="text" placeholder="(555) 123-4567 or john@email.com" required />
+              </div>
+            </div>
+
+            <div class="two-col">
+              <div>
+                <label for="carModel">Car Model</label>
+                <input id="carModel" type="text" placeholder="Toyota Camry 2022" required />
+              </div>
+
+              <div>
+                <label for="service">Service</label>
+                <select id="service" required>
+                  <option value="">Select a service</option>
+                  <option>Interior Detail</option>
+                  <option>Exterior Wash</option>
+                  <option>Full Detail</option>
+                  <option>Premium Detail</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="two-col">
+              <div>
+                <label for="date">Preferred Date</label>
+                <input id="date" type="date" required />
+              </div>
+
+              <div>
+                <label for="selectedTime">Selected Time</label>
+                <input id="selectedTime" type="text" value="" placeholder="Choose a time below" readonly required />
+              </div>
+            </div>
+
+            <div>
+              <label>Available Times</label>
+              <div class="time-grid">
+                <div class="time-slot">10:00 AM</div>
+                <div class="time-slot">11:00 AM</div>
+                <div class="time-slot">12:00 PM</div>
+                <div class="time-slot">1:00 PM</div>
+                <div class="time-slot">2:00 PM</div>
+                <div class="time-slot">3:00 PM</div>
+                <div class="time-slot">4:00 PM</div>
+                <div class="time-slot">5:00 PM</div>
+                <div class="time-slot">6:00 PM</div>
+                <div class="time-slot">7:00 PM</div>
+                <div class="time-slot">7:30 PM</div>
+                <div class="time-slot">8:00 PM</div>
+              </div>
+            </div>
+
+            <button type="submit" class="submit-btn">Request Appointment</button>
+
+            <div class="success" id="successMsg">
+              Your appointment request was received. Please bring your vehicle and pay cash when you arrive.
+            </div>
+          </form>
+        </div>
+
+        <div class="panel">
+          <h2>Visit Info</h2>
+
+          <div class="info-box">
+            <strong>Hours</strong>
+            <span>Open every day from 10:00 AM to 8:00 PM</span>
+          </div>
+
+          <div class="info-box">
+            <strong>Booking Request</strong>
+            <span>Leave your car model, phone number or email, and preferred time. We do not take online bookings by phone.</span>
+          </div>
+
+          <div class="info-box">
+            <strong>Payment</strong>
+            <span class="cash">Cash payment is accepted when you arrive.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const dateInput = document.getElementById("date");
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, "0");
+      const day = String(today.getDate()).padStart(2, "0");
+      dateInput.min = `${year}-${month}-${day}`;
+
+      const timeSlots = document.querySelectorAll(".time-slot");
+      const selectedTime = document.getElementById("selectedTime");
+
+      timeSlots.forEach(slot => {
+        slot.addEventListener("click", () => {
+          timeSlots.forEach(btn => btn.classList.remove("selected"));
+          slot.classList.add("selected");
+          selectedTime.value = slot.textContent.trim();
+        });
+      });
+
+      document.getElementById("bookingForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const name = document.getElementById("name").value.trim();
+        const contact = document.getElementById("contact").value.trim();
+        const carModel = document.getElementById("carModel").value.trim();
+        const service = document.getElementById("service").value;
+        const date = document.getElementById("date").value;
+        const time = document.getElementById("selectedTime").value;
+
+        if (!name || !contact || !carModel || !service || !date || !time) {
+          alert("Please fill in all required fields.");
+          return;
+        }
+
+        const msg = document.getElementById("successMsg");
+        msg.classList.add("show");
+        this.reset();
+
+        timeSlots.forEach(slot => slot.classList.remove("selected"));
+        selectedTime.value = "";
+      });
+    </script>
+  </body>
+</html>
